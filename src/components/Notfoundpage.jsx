@@ -1,5 +1,7 @@
+import { Link, useNavigate } from "react-router-dom";
 
 function Notfoundpage() {
+  const navigate=useNavigate();
   return (
     <>
     <div className="h-screen wfull flex flex-col justify-center items-center bg-orange-50">
@@ -8,10 +10,10 @@ function Notfoundpage() {
             Page not found ...
         </div>
        
-        <button className="mt-5">
-0        <a href="" className="relative inline-orange-50 text-sm text-orange-50  bg-orange-500 font-medium p-4 rounded-lg hover:text-orange-500 hover:bg-orange-50 group active:text-orange-700 focus:outline-none focus-ring">
+        <button className="mt-5" onClick={()=>navigate(-1)}>
+       <Link to="/" className="relative inline-orange-50 text-sm text-orange-50  bg-orange-500 font-medium p-4 rounded-lg hover:text-orange-500 hover:bg-orange-50 group active:text-orange-700 focus:outline-none focus-ring">
             <span className="relative black px-4 border-current">Go Back</span>
-        </a>
+        </Link>
         </button>
 
     </div>

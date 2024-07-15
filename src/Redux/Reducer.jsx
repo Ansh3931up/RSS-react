@@ -6,6 +6,7 @@ import axiosInstance from "../Helpers/axios.jsx"
 const initialState = {
     isLoggedIn: localStorage.getItem("isLoggedIn")||false,
     // isLoggedIn:false,
+    avatar:localStorage.getItem('avatar') || null,
     role: localStorage.getItem('role') || "",
     data: localStorage.getItem('data')=== undefined ? JSON.parse(localStorage.getItem('data')) : {}
 };
@@ -75,7 +76,9 @@ export const authSlice = createSlice({
         // om successful account creation
         state.isLoggedIn = true; // Set isLoggedIn to true upon successful creation
         state.data = action.payload;
-        state.role=action?.payload?.user?.role // Update data with the payload returned from the API
+        state.role=action?.payload?.user?.role;
+        state.avatar=action?.payload?.data?.avatar; 
+        localStorage.setItem("avatar",action?.payload?.data?.avatar)// Update data with the payload returned from the API
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("data",JSON.stringify(action?.payload?.user))
         localStorage.setItem("role",action?.payload?.user?.role);

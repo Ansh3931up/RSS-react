@@ -3,43 +3,47 @@ import toast from "react-hot-toast";
 
 import axiosInstance from "../Helpers/axios";
 
-const initialState={
-    blogs:[]
-}
-export const getblog=createAsyncThunk('blog/getall',async(data)=>{
-   try {
-     const res=axiosInstance.get('/blog',data);
-     toast.promise(res,
-         {
-             loading:"Wait! loading data",
-             success:(data)=>{
-                 return data?.data?.message;
-             },
-             error:"Failed to login"
- 
-         },
-        
-     );
-     return (await res).data;
-   } catch (error) {
-        toast.error(error?.response?.data?.message);
-   }
+const initialState = {
+  BlogData: [], // Initialize blogs as an empty array
+};
 
+// Async thunk to fetch blog data
+export const getblog = createAsyncThunk('blog/getall', async (data) => {
+  try {
+    const response = await axiosInstance.get('/blog', data);
+    
+    // Display toast notification with loading state and success message
+    toast.promise(
+      Promise.resolve(response.data),
+      {
+        loading: "Wait! Loading data",
+        success: () => {
+          return "Blog data fetched successfully";
+        },
+        error: "Failed to fetch blog data"
+      }
+    );
 
-})
-export const blogSlice=createSlice({
-    name:'blogs',
-    initialState,
-    reducers:{
+    return response.data; // Return the actual data fetched
+  } catch (error) {
+    toast.error(error?.response?.data?.message || "Failed to fetch blog data");
+    throw error; // Rethrow the error to let Redux Toolkit handle it
+  }
+});
 
-    },
-    extraReducers:(builder)=>{
-        builder.addCase(getblog.fulfilled,(state,action)=>{
-            if(action.payload){
-                state.courseData=[...action.payload]
-            }
-        })
-    }
+// Redux slice for blog state management
+export const blogSlice = createSlice({
+  name: 'blog',
+  initialState,
+  reducers: {
+    // You can add reducers here if needed
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getblog.fulfilled, (state, action) => {
+      // Update state with fetched blog data when the promise is fulfilled
+      state.BlogData = action.payload; // Assuming action.payload is an array of blog items
+    });
+  }
 });
 
 export default blogSlice.reducer;

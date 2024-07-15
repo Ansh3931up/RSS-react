@@ -12,6 +12,10 @@ import {  createBrowserRouter, createRoutesFromElements,Route,RouterProvider } f
 
 import { store } from './app/store';
 import Aboutpage from './components/Aboutpage';
+import BlogDescriptionpage from './components/BlogDescriptionpage';
+import BlogList from './components/BlogPages/BlogList';
+import Contactpage from './components/Contactpage';
+import Deniedpage from './components/Deniedpage';
 import HomeLayout from './components/HomeLayout';
 import { Layout } from './components/Layout';
 import Loginpage from './components/Loginpage';
@@ -26,7 +30,10 @@ const router=createBrowserRouter(
       <Route path='about' element={<Aboutpage/>}/>
       <Route path='signup' element={<Signup/>}/>
       <Route path='Login' element={<Loginpage/>}/>
-
+      <Route path='updates' element={<BlogList/>}/>
+      <Route path='contact' element={<Contactpage/>}/>
+      <Route path='denied' element={<Deniedpage/>}/>
+      <Route path='updates/description' element={<BlogDescriptionpage/>}/>
       {/* <Route path='newsletter' element={<NewsLetter/>}/> */}
     
       {/* <Route path='contact' element={<Contact/>}/> */}
