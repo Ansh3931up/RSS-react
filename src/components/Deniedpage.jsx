@@ -9,7 +9,7 @@ function Deniedpage() {
           </div>
          
           <button className="mt-5">
-         <a href="" className="relative inline-orange-50 text-sm text-orange-50  bg-orange-500 font-medium p-4 rounded-lg hover:text-orange-500 hover:bg-orange-50 group active:text-orange-700 focus:outline-none focus-ring">
+         <a href="/" className="relative inline-orange-50 text-sm text-orange-50  bg-orange-500 font-medium p-4 rounded-lg hover:text-orange-500 hover:bg-orange-50 group active:text-orange-700 focus:outline-none focus-ring">
               <span className="relative black px-4 border-current">Go Back</span>
           </a>
           </button>

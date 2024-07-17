@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+// import { isButtonElement } from "react-router-dom/dist/dom";
 import { getblog } from "../../Redux/Blog";
 import BlogCard from "../BlogCard";
 import updateImage from "./update.jpg"; // Import the background image
@@ -8,6 +9,8 @@ import updateImage from "./update.jpg"; // Import the background image
 function BlogList() {
     const dispatch = useDispatch();
     const BlogData = useSelector((state) => state.blog.BlogData.data);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
+    const role = useSelector((state) => state.auth.role); 
 
     useEffect(() => {
         dispatch(getblog());
@@ -24,6 +27,10 @@ function BlogList() {
                     <BlogCard key={element._id} data={element} />
                 ))}
             </div>
+            {/* consol */}
+            {isLoggedIn && role === "admin" &&  ( <button type="button" className="text-white bg-orange-500 hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 me-2 mb-2">Create More</button>
+                
+        )   }
         </div>
     );
 }

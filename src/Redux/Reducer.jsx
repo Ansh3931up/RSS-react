@@ -80,8 +80,8 @@ export const authSlice = createSlice({
         state.avatar=action?.payload?.data?.avatar; 
         localStorage.setItem("avatar",action?.payload?.data?.avatar)// Update data with the payload returned from the API
         localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("data",JSON.stringify(action?.payload?.user))
-        localStorage.setItem("role",action?.payload?.user?.role);
+        localStorage.setItem("data",JSON.stringify(action?.payload?.data))
+        localStorage.setItem("role",action?.payload?.data?.role);
 
     })
     builder.addCase(logout.fulfilled,(state)=>{

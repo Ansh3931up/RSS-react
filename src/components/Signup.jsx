@@ -35,6 +35,7 @@ function Signup() {
   const handleImageChange = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
+    console.log(e.target.files[0])
     if (file) {
       setSignupData({
         ...signupData,

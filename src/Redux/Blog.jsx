@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { asyncThunkCreator, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 import axiosInstance from "../Helpers/axios";
@@ -31,6 +31,22 @@ export const getblog = createAsyncThunk('blog/getall', async (data) => {
   }
 });
 
+export const createblog=createAsyncThunk('blog/create',async(data)=>{
+  try {
+    const res = axiosInstance.post("blog/", data);
+    toast.promise(res, {
+        loading: "Wait! creating your account",
+        success: (data) => {
+            return data?.data?.message;
+        },
+        error: "Failed to create account"
+    });
+    return (await res).data;
+} catch(error) {
+    toast.error(error?.response?.data?.message);
+}
+});
+
 // Redux slice for blog state management
 export const blogSlice = createSlice({
   name: 'blog',
@@ -42,7 +58,9 @@ export const blogSlice = createSlice({
     builder.addCase(getblog.fulfilled, (state, action) => {
       // Update state with fetched blog data when the promise is fulfilled
       state.BlogData = action.payload; // Assuming action.payload is an array of blog items
-    });
+    }
+      
+  );
   }
 });
 

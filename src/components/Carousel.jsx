@@ -2,7 +2,7 @@ import React from 'react';
 
 function Carousel({ slide, image, totalslide, title, description }) {
   return (
-    <div id={`slide${slide}`} className="carousel-item relative w-full">
+    <div id={`slide${slide}`} className="carousel-item relativ  w-full">
       <div className="card lg:card-side bg-orange-50 text-orange-700 shadow-xl">
         <figure>
           <img src={ `/assets/${image}`} alt="Album" />
