@@ -131,7 +131,7 @@ export const authSlice = createSlice({
         // om successful account creation
         state.isLoggedIn = true; // Set isLoggedIn to true upon successful creation
         state.data = action.payload.data;
-        // console.log(action?.payload?.data?.role);
+        console.log(action?.payload?.data);
         state.role=action?.payload?.data?.role;
         state.avatar=action?.payload?.data?.avatar; 
         localStorage.setItem("avatar",action?.payload?.data?.avatar)// Update data with the payload returned from the API
