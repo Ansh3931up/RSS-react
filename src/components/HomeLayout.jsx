@@ -6,6 +6,8 @@ import bgimg3 from "../assets/gettyimages-1239745009-612x612.jpg";
 import img1 from "../assets/img1.jpg"
 import img2 from "../assets/img2.jpg"
 import img3 from "../assets/img3.jpg"
+import Homecomponent from './Homecomponent';
+
 // import logo from "../assets/rss-logo.jpg"
 
 function HomeLayout() {
@@ -43,6 +45,7 @@ function HomeLayout() {
   };
 
   return (
+    <>
     <div className="relative">
       <div className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000" style={bgStyle}></div>
       <div className="absolute inset-0 bg-orange-500 opacity-50" style={{ mixBlendMode: 'multiply', transition: `opacity ${transitionDuration / 1000}s ease` }}></div>
@@ -66,7 +69,9 @@ function HomeLayout() {
         </div>
       </div>
     </div>
+    <Homecomponent/>
     
+    </>
   );
 }
 

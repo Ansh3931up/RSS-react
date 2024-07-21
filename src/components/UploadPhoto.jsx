@@ -4,29 +4,28 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { createblog } from '../Redux/Blog.jsx';
+// import { createblog } from '../Redux/Blog.jsx';
+import { uploadImage } from "../Redux/gallery.jsx";
 import updateImage from "./update.jpg";
 
-function CreateBlog() {
+const UploadPhoto=()=> {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [userInput, setUserInput] = useState({
-    title: "",
-    description: "",
-    thumbnail: null,
+    photo: null,
     previewImage: "",
   });
 
   const saveImage = async () => {
-    if (!userInput.thumbnail) {
+    if (!userInput.photo) {
       toast.error('Please select an image');
       return null;
     }
 
     const data = new FormData();
-    data.append('file', userInput.thumbnail);
-    data.append('upload_preset', 'blogapp');
+    data.append('file', userInput.photo);
+    data.append('upload_preset', 'photogallery');
     data.append('cloud_name', 'dxueqphl3');
 
     try {
@@ -55,7 +54,7 @@ function CreateBlog() {
     if (file) {
       setUserInput({
         ...userInput,
-        thumbnail: file,
+        photo: file,
       });
 
       const reader = new FileReader();
@@ -69,18 +68,12 @@ function CreateBlog() {
     }
   };
 
-  const handleUserInput = (e) => {
-    const { name, value } = e.target;
-    setUserInput({
-      ...userInput,
-      [name]: value,
-    });
-  };
+ 
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (!userInput.title || !userInput.description || !userInput.thumbnail) {
+    if (!userInput.photo) {
       toast.error("All fields are mandatory");
       return;
     }
@@ -92,19 +85,16 @@ function CreateBlog() {
       return;
     }
 
-    const response = await dispatch(createblog({
-      title: userInput.title,
-      description: userInput.description,
-      thumbnail: imageUrl, // Use the returned image URL
+    const response = await dispatch(uploadImage({
+    
+      photo: imageUrl, // Use the returned image URL
     }));
 
     if (response?.payload?.success) {
       navigate("/updates");
       setUserInput({
-        title: "",
-        description: "",
-        thumbnail: null,
         previewImage: "",
+        photo: null,
       });
       
     }
@@ -146,24 +136,6 @@ function CreateBlog() {
             onChange={handleImageChange}
           />
         </main>
-
-        <input
-          type="text"
-          name="title"
-          value={userInput.title}
-          onChange={handleUserInput}
-          placeholder="Title"
-          className="border rounded p-2 bg-white text-orange-500"
-        />
-
-        <textarea
-          name="description"
-          value={userInput.description}
-          onChange={handleUserInput}
-          placeholder="Description"
-          className="border rounded p-2 bg-white text-orange-500"
-        />
-
         <button type="submit" className="bg-orange-500 p-2 rounded text-white">
           Submit
         </button>
@@ -172,4 +144,4 @@ function CreateBlog() {
   );
 }
 
-export default CreateBlog;
+export default UploadPhoto;

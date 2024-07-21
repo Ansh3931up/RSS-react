@@ -15,12 +15,19 @@ import BlogList from './components/BlogPages/BlogList';
 import Contactpage from './components/Contactpage';
 import CreateBlog from './components/CreateBlog';
 import Deniedpage from './components/Deniedpage';
+import Editpassword from './components/Editpassword';
+import EditProfile from './components/EditProfile';
 import HomeLayout from './components/HomeLayout';
 import Layout from './components/Layout';
 import Loginpage from './components/Loginpage';
 import Notfoundpage from './components/Notfoundpage';
+import PhotoGallery from './components/PhotoGallery';
+import Profile from './components/Profile';
 import RequireAuth from './components/RequireAuth';
 import Signup from './components/Signup';
+// import uploadPhoto from './components/UploadPhoto';
+import UploadPhoto from './components/UploadPhoto';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +39,17 @@ const router = createBrowserRouter(
       <Route path="updates" element={<BlogList />} />
       <Route path="contact" element={<Contactpage />} />
       <Route path="denied" element={<Deniedpage />} />
+      <Route path="user/profile/change-password" element={<Editpassword />} />
+
+      <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
+          <Route path="user/profile" element={<Profile />} />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
+          <Route path="user/profile/editprofile" element={<EditProfile />} />
+        </Route>
+
+      <Route path="gallery" element={<PhotoGallery />} />
+      <Route path="upload/image" element={<UploadPhoto />} />      
       <Route path="updates/description" element={<BlogDescriptionpage />} />
       <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
         <Route path="updates/create" element={<CreateBlog />} />

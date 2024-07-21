@@ -11,6 +11,7 @@ const initialState = {
     data: localStorage.getItem('data')=== undefined ? JSON.parse(localStorage.getItem('data')) : {}
 };
 
+
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     try {
         const res = axiosInstance.post("user/register", data);
@@ -44,6 +45,23 @@ export const loginAccount=createAsyncThunk('auth/login',async(data)=>{
         
     }
 })
+export const getUserData=createAsyncThunk('auth/getUserData',async(data)=>{
+    try {
+        const res=axiosInstance.post('user/me',data);
+        toast.promise(
+            res,{
+                loading:"Wait! for getting your data",
+                success:(data)=>{
+                    return data?.data?.message;
+                },
+                error:"Failed to get your data"
+            }
+        );
+        return (await res).data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+})
 export const logout=createAsyncThunk('auth/logout',async(data)=>{
  try {
        const res=axiosInstance.post('user/logout',data);
@@ -63,6 +81,43 @@ export const logout=createAsyncThunk('auth/logout',async(data)=>{
     toast.error(error?.response?.data?.message);
     }
 })
+export const saveChanges=createAsyncThunk('auth/saveChanges',async(data)=>{
+    try {
+        const res=axiosInstance.post('user/change-details',data);
+        toast.promise(
+            res,{
+                loading:"Wait! for saving your data",
+                success:(data)=>{
+                    return data?.data?.message;
+                },
+                error:"Failed to save your data"
+            }
+        );
+        return (await res).data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+});
+export const ChangePassword=createAsyncThunk('auth/changePassword',async(data)=>{
+    try {
+        const response=axiosInstance.post('user/change-password',data);
+        toast.promise(
+            response,{
+                laoding:"Wait! for changing your password",
+                success:(data)=>{
+                    return data?.data?.message;
+                },
+                error:"Failed to change your password"
+            }
+        );
+        console.log("response",response);
+        return (await response).data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    
+        
+    }
+})
 
 // Slice definition
 export const authSlice = createSlice({
@@ -75,12 +130,14 @@ export const authSlice = createSlice({
     builder.addCase(loginAccount.fulfilled,(state,action)=>{
         // om successful account creation
         state.isLoggedIn = true; // Set isLoggedIn to true upon successful creation
-        state.data = action.payload;
-        state.role=action?.payload?.user?.role;
+        state.data = action.payload.data;
+        // console.log(action?.payload?.data?.role);
+        state.role=action?.payload?.data?.role;
         state.avatar=action?.payload?.data?.avatar; 
         localStorage.setItem("avatar",action?.payload?.data?.avatar)// Update data with the payload returned from the API
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("data",JSON.stringify(action?.payload?.data))
+        console.log(action?.payload?.data?.role);
         localStorage.setItem("role",action?.payload?.data?.role);
 
     })
@@ -89,6 +146,21 @@ export const authSlice = createSlice({
         state.isLoggedIn=false;
         state.data={};
         state.role="";
+    })
+    builder.addCase(getUserData.fulfilled,(state,action)=>{
+        // console.log(action.payload.data);
+        state.data=action.payload.data;
+        state.avatar=action.payload?.data?.avatar;
+        state.role=action.payload?.data?.role;
+        localStorage.setItem("data",JSON.stringify(action?.payload.data));
+        localStorage.setItem("avatar",action?.payload?.data?.avatar);
+        localStorage.setItem("role",action?.payload?.data?.role);
+    })
+    builder.addCase(saveChanges.fulfilled,(state,action)=>{
+        state.data=action.payload.data;
+        // state.avatar=action.payload?.data?.avatar;
+        localStorage.setItem("data",JSON.stringify(action?.payload.data));
+        // localStorage.setItem("avatar",action?.payload?.data?.avatar);
     })
     
   

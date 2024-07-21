@@ -1,13 +1,13 @@
-import React from 'react';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
-  Button,
   Typography,
 } from "@material-tailwind/react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import updateImage from "./update.jpg";
 
 function formatDate(createdAt) {
@@ -15,10 +15,7 @@ function formatDate(createdAt) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-//   const hours = String(date.getHours()).padStart(2, '0');
-//   const minutes = String(date.getMinutes()).padStart(2, '0');
-//   const seconds = String(date.getSeconds()).padStart(2, '0');
-  return `${year}-${month}-${day} `;
+  return `${year}-${month}-${day}`;
 }
 
 function BlogDescriptionPage() {
@@ -40,7 +37,7 @@ function BlogDescriptionPage() {
       <Typography variant="h2" color="white" className="mb-8">
         Latest Update
       </Typography>
-      <Card className="w-4/5 md:w-2/3 h-96  flex flex-col md:flex-row shadow-lg bg-white">
+      <Card className="w-4/5 md:w-2/3 h-96 flex flex-col md:flex-row shadow-lg bg-white">
         <CardHeader className="w-full md:w-1/2 h-48 md:h-full">
           <img src={thumbnail} alt="thumbnail" className="w-full h-full object-cover" />
         </CardHeader>
@@ -49,9 +46,11 @@ function BlogDescriptionPage() {
             <Typography variant="h5" color="blue-gray" className="font-medium mb-4">
               {title}
             </Typography>
-            <Typography color="gray" className="mb-4">
-              {description}
-            </Typography>
+            <div className="mb-4 text-sm h-56 overflow-y-auto">
+              <Typography color="gray">
+                {description}
+              </Typography>
+            </div>
             <Typography color="gray" className="mb-4">
               Published on: {formattedDate}
             </Typography>

@@ -5,7 +5,6 @@ export function isEmail(String){
 export function isValidPassword(String){
     return String.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
 }
-export function isPincodeValid(Number){
-    return Number.match(/^(\d{4}|^\d{6})$/);
-
+export function isPincodeValid(pincode) {
+    return pincode.toString().match(/^(\d{4}|\d{6})$/);
 }

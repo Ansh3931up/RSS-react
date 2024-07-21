@@ -9,11 +9,16 @@ import updateImage from "./update.jpg";
 function Loginpage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);  
+  const toggleShowPassword = () => {    
+    setShowPassword(!showPassword); 
+  };
 
   const [LoginData, setLoginData] = useState({
     email: "",
     password: ""
   });
+  
 
   const handleUserInput = (e) => {
     const { name, value } = e.target;
@@ -71,8 +76,9 @@ function Loginpage() {
           <label htmlFor="password" className="font-semibold">
             Password
           </label>
+          <div className="relative">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             required
             value={LoginData.password}
             name="password"
@@ -81,6 +87,15 @@ function Loginpage() {
             className="bg-transparent px-3 py-2 border border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
             onChange={handleUserInput}
           />
+            <button
+              type="button"
+              onClick={toggleShowPassword}
+              className="absolute inset-y-0 right-0 px-3 flex items-center text-orange-500 focus:outline-none"
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+
+          </div>
         </div>
         <button
           type="submit"

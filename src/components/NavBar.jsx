@@ -1,5 +1,5 @@
-import { Menu, X } from 'lucide-react'; 
-import React from 'react';
+import { Menu, X } from 'lucide-react';
+import React, { useState } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { CiFlag1 } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,11 +33,11 @@ const menuItems = [
 function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
-  const role = useSelector((state) => state.auth.role); 
-  const previewImage = useSelector((state) => state.auth.avatar); 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const role = useSelector((state) => state.auth.role);
+  const previewImage = useSelector((state) => state.auth.avatar);
 
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -112,10 +112,12 @@ function NavBar() {
               >
                 Logout
               </button>
-              <div className="avatar  flex justify-start items-start">
+              <div className="avatar flex justify-start items-start">
                 <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden">
                   {previewImage ? (
-                    <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
+                    <Link to='user/profile'>
+                      <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
+                    </Link>
                   ) : (
                     <BsPersonCircle className="w-full h-full object-cover text-6xl" />
                   )}
@@ -142,6 +144,15 @@ function NavBar() {
                     </span>
                     <span className="font-bold text-orange-500">Rashtriya Swayamsevak Sangh</span>
                   </Link>
+                  <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden">
+                    {previewImage ? (
+                      <Link to='user/profile'>
+                        <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
+                      </Link>
+                    ) : (
+                      <BsPersonCircle className="w-full h-full object-cover text-6xl" />
+                    )}
+                  </div>
                   <button
                     type="button"
                     onClick={toggleMenu}
@@ -173,7 +184,7 @@ function NavBar() {
                         type="button"
                         className="w-full rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
-                        SignUp
+                        Signup
                       </button>
                     </Link>
                     <Link to="/Login">
