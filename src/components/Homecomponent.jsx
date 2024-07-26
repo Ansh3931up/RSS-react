@@ -14,11 +14,11 @@ import updateImage from "./update.jpg";
 
 export default function Homecomponent() {
     const dispatch = useDispatch();
-    const BlogData = useSelector((state) => state.blog.BlogData);
+    const BlogData = useSelector((state) => state?.blog?.BlogData);
     // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
     // const role = useSelector((state) => state.auth.role); 
     // const page="home";
-    const photo = useSelector((state) => state?.photo?.photo.data);
+    const photo = useSelector((state) => state?.photo?.photo?.data);
     
     useEffect(() => {
         dispatch(getblog());
