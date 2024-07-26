@@ -140,11 +140,11 @@ function NavBar() {
                   </Link>
                   <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden cursor-pointer" onClick={handleAvatarClick}>
                     {previewImage ? (
-                      <Link to='user/profile'>
+                      <Link to='user/profile'  onClick={handleMenuItemClick}>
                         <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
                       </Link>
                     ) : (
-                      <BsPersonCircle className="w-full h-full object-cover text-6xl" />
+                      <BsPersonCircle className="w-full h-full object-cover text-6xl"  onClick={handleMenuItemClick} />
                     )}
                   </div>
                   <button
@@ -186,6 +186,7 @@ function NavBar() {
                     <Link to="/signup">
                       <button
                         type="button"
+                         onClick={handleMenuItemClick}
                         className="w-full rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
                         Signup
@@ -194,6 +195,7 @@ function NavBar() {
                     <Link to="/Login">
                       <button
                         type="button"
+                        onClick={handleMenuItemClick}
                         className="w-full rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
                         Log In
@@ -203,7 +205,7 @@ function NavBar() {
                 ) : (
                   <div className="mt-6 space-y-2">
                     <button
-                      onClick={handleLogout}
+                      onClick={()={handleLogout();handleMenuItemClick();}}
                       type="button"
                       className="w-full rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
