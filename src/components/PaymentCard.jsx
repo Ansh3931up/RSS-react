@@ -51,7 +51,7 @@ const PaymentCard = ({ data }) => {
       {/* Card Content */}
       <CardContent className="p-4">
         <div className="space-y-2">
-          {data?.title && <CardTitle className="text-lg font-semibold">{data?.title}</CardTitle>}
+          {data?.title && <CardTitle className="text-lg text-black font-semibold">{data?.title}</CardTitle>}
           {data?.description && <CardDescription className="text-gray-700">{data?.description}</CardDescription>}
         </div>
         <div className="flex items-center justify-between mt-4">
