@@ -96,9 +96,16 @@ const Profile = () => {
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
                   {data?data?.email:"loading..."}
                 </div>
-                <div className="mb-2 text-blueGray-600 mt-10">
-                  <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Subscribed Magazine- {data?isSubscribed?.map((item)=>item.title)}
-                </div>
+               <div className="mb-2 text-blueGray-600 mt-10">
+    <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+    Subscribed Magazine: {data && data.isSubscribed && data.isSubscribed.length > 0 ? 
+        data.isSubscribed.map((item) => (
+            <div key={item._id}>{item.title}</div>
+        )) :
+        <span>No magazines subscribed</span>
+    }
+</div>
+
                 
               </div>
               <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
