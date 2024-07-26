@@ -104,11 +104,11 @@ function NavBar() {
               <div className="avatar flex justify-start items-start">
                 <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden">
                   {previewImage ? (
-                    <Link to='user/profile'>
+                    <Link to='user/profile'  onClick={handleMenuItemClick} >
                       <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
                     </Link>
                   ) : (
-                    <BsPersonCircle className="w-full h-full object-cover text-6xl" />
+                    <BsPersonCircle className="w-full h-full object-cover text-6xl"  onClick={handleMenuItemClick}  />
                   )}
                 </div>
               </div>
