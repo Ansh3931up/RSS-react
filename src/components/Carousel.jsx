@@ -2,12 +2,12 @@ import React from 'react';
 
 function Carousel({ slide, image, totalslide, title, description }) {
   return (
-    <div id={`slide${slide}`} className="carousel-item relativ  w-full">
-      <div className="card lg:card-side bg-orange-50 text-orange-700 shadow-xl">
-        <figure>
-          <img src={ `/assets/${image}`} alt="Album" />
+    <div id={`slide${slide}`} className="carousel-item relative w-full">
+      <div className="card lg:card-side bg-orange-50 text-orange-700 shadow-xl flex flex-col lg:flex-row">
+        <figure className="w-full lg:w-1/3">
+          <img src={image} alt="Album" className="w-full h-full object-cover" />
         </figure>
-        <div className="card-body text-orange border-orange-500">
+        <div className="card-body text-orange text-justify border-orange-500 lg:w-2/3">
           <h2 className="card-title">{title}</h2>
           <p>{description}</p>
           <div className="card-actions justify-end">

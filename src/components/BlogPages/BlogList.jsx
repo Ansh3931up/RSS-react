@@ -8,7 +8,7 @@ import updateImage from "./update.jpg"; // Import the background image
 
 function BlogList() {
     const dispatch = useDispatch();
-    const BlogData = useSelector((state) => state.blog.BlogData.data);
+    const BlogData = useSelector((state) => state.blog.BlogData);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
     const role = useSelector((state) => state.auth.role); 
 

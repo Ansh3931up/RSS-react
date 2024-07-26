@@ -9,7 +9,7 @@ const initialState={
 }
 export const uploadImage=createAsyncThunk('photo/uploadImage',async(data)=>{
     try {
-        console.log(data);
+        // console.log(data);
         const res=axiosInstance.post('photo/uploadphoto',data);
         toast.promise(
             res,{
@@ -31,18 +31,9 @@ export const uploadImage=createAsyncThunk('photo/uploadImage',async(data)=>{
 export const getphotos=createAsyncThunk('phot/getphotos',async()=>{
     try {
         const response=axiosInstance.get('photo/getgalleries');
-        toast.promise(response,
-            {
-                loading:"Wait! fetching photos",
-                success:(data)=>{
-                    return data?.data?.message;
-                },
-                error:"Failed to fetch photos"
-            }
-        )
         return (await response).data;
     } catch (error) {
-        toast.error(error?.response?.data?.message);
+        console.log(error);
         
     }
 
@@ -53,11 +44,11 @@ export const photoSlice=createSlice({
     reducers:{},
     extraReducers:(builder)=>{
         builder.addCase(uploadImage.fulfilled,(state,action)=>{
-            console.log(action.payload);
+            // console.log(action.payload);
             state.photo=action.payload;
         })
         builder.addCase(getphotos.fulfilled,(state,action)=>{
-            console.log(action.payload);
+            // console.log(action.payload);
             state.photo=action.payload;
         })
     }

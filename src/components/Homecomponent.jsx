@@ -7,22 +7,27 @@ import { Link } from 'react-router-dom';
 
 import aboutimg from "../assets/aboutimg.jpg";
 import { getblog } from '../Redux/Blog';
+import { getphotos } from '../Redux/gallery';
 import BlogCard from './BlogCard';
-import updateImage from "./update.jpg"; 
 import Photocomponent from './Photocomponent';
+import updateImage from "./update.jpg"; 
 
 export default function Homecomponent() {
     const dispatch = useDispatch();
-    const BlogData = useSelector((state) => state.blog.BlogData.data);
+    const BlogData = useSelector((state) => state.blog.BlogData);
     // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
     // const role = useSelector((state) => state.auth.role); 
     // const page="home";
     const photo = useSelector((state) => state?.photo?.photo.data);
+    
     useEffect(() => {
         dispatch(getblog());
+        dispatch(getphotos());
     }, [dispatch]);
     const latestphoto = photo?.slice(-6);
     const latestBlogs = BlogData?.slice(-3);
+    // console.log(latestBlogs,"blog");
+    // console.log(latestphoto,"photo");
   return (
     <div className="bg-orange-100 text-orange-500"  style={{ backgroundImage: `url(${updateImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <section className="py-12 md:py-20">

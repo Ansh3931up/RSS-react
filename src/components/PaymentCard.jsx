@@ -1,67 +1,87 @@
+import  { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+import { Card, CardContent, CardDescription, CardTitle } from "../components/CardComponent.jsx";
+import { removePayCard } from '../Redux/Payment';
 
-function Card({ children, className }) {
+const PaymentCard = ({ data }) => {
+  const navigate=useNavigate();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const role = useSelector((state) => state.auth.role);
+  const dispatch = useDispatch();
+ 
+  
+  // Local state to track if removal is in progress
+  const [isRemoved, setIsRemoved] = useState(false);
+
+  const handleRemove = async (id) => {
+    try {
+      // Dispatch remove action and wait for completion
+      await dispatch(removePayCard({ id }));
+      
+      // Set removal status to true after successful removal
+      setIsRemoved(true);
+    } catch (error) {
+      console.error('Failed to remove the item:', error);
+    }
+  };
+
+  const handlePreview = (pdfUrl) => {
+    window.open(pdfUrl, '_blank');
+  };
+
+  useEffect(() => {
+    // Trigger page refresh if removal was successful
+    if (isRemoved) {
+      window.location.reload();
+    }
+  }, [isRemoved]);
+
   return (
-    <div className={`bg-white shadow-lg rounded-lg ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-function CardContent({ children, className }) {
-  return (
-    <div className={`p-6 ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-function CardTitle({ children, className }) {
-  return (
-    <h3 className={`text-2xl font-bold ${className}`}>
-      {children}
-    </h3>
-  );
-}
-
-function CardDescription({ children, className }) {
-  return (
-    <p className={`text-gray-600 ${className}`}>
-      {children}
-    </p>
-  );
-}
-
-function Button({ children, variant, size }) {
-  const baseStyle = 'px-4 py-2 rounded-md focus:outline-none';
-  const variantStyle = variant === 'outline' ? 'border border-gray-300' : 'bg-blue-500 text-white';
-  const sizeStyle = size === 'sm' ? 'text-sm' : 'text-base';
-
-  return (
-    <button className={`${baseStyle} ${variantStyle} ${sizeStyle}`}>
-      {children}
-    </button>
-  );
-}
-
-const  PaymentCard=()=> {
-  return (
-    <Card className="w-full max-w-sm">
-      <img src="/placeholder.svg" alt="Magazine Cover" width={400} height={300} className="rounded-t-lg object-cover" />
-      <CardContent className="space-y-4">
+    <Card className="w-full max-w-sm rounded-lg border border-gray-200 overflow-hidden shadow-md">
+      {/* Image */}
+      {data?.thumbnail && (
+        <img
+          src={data?.thumbnail}
+          alt="Card Thumbnail"
+          className="w-full h-48 object-cover"
+        />
+      )}
+      {/* Card Content */}
+      <CardContent className="p-4">
         <div className="space-y-2">
-          <CardTitle>National Geographic</CardTitle>
-          <CardDescription>Explore the wonders of the natural world with National Geographic magazine.</CardDescription>
+          {data?.title && <CardTitle className="text-lg font-semibold">{data?.title}</CardTitle>}
+          {data?.description && <CardDescription className="text-gray-700">{data?.description}</CardDescription>}
         </div>
-        <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold">$5.99</div>
-          <Button variant="outline" size="sm">
-            Preview
-          </Button>
+        <div className="flex items-center justify-between mt-4">
+          <div className="text-xl text-black font-bold">₹{data.price}</div>
+          <div className='flex gap-2'>
+          <button 
+              className='bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded transition-colors duration-300'
+              onClick={()=>navigate("checkout",{ state: { ...data }},data)}
+            >
+              Buy Now
+            </button>
+            <button 
+              className='bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded transition-colors duration-300'
+              onClick={() => handlePreview(data.preview)}
+            >
+              Preview
+            </button>
+            {isLoggedIn && role === 'ADMIN' && (
+              <button 
+                className='bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded transition-colors duration-300'
+                onClick={() => handleRemove(data._id)}
+              >
+                Remove
+              </button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
   );
-}
+};
 
 export default PaymentCard;

@@ -8,10 +8,39 @@ const initialState = {
     // isLoggedIn:false,
     avatar:localStorage.getItem('avatar') || null,
     role: localStorage.getItem('role') || "",
-    data: localStorage.getItem('data')=== undefined ? JSON.parse(localStorage.getItem('data')) : {}
+    data: localStorage.getItem('data')=== undefined ? JSON.parse(localStorage.getItem('data')) : {},
+    admindata:localStorage.getItem('admindata')=== undefined ? JSON.parse(localStorage.getItem('admindata')) : [],
+    revenue:0,
+    filteruser:localStorage.getItem('filterdata')=== undefined ? JSON.parse(localStorage.getItem('filterdata')) : []
 };
 
-
+export const admindatas=createAsyncThunk('auth/admindata',async(data)=>{
+    try {
+        const res = await axiosInstance.get('user/alldata', data);
+        return res.data;
+    } catch (error) {
+        console.error(error);
+        return error.response.data;
+    }
+})
+export const filterPincode=createAsyncThunk('auth/filterPincode',async(data)=>{
+    try {
+        const res = await axiosInstance.get(`user/filter/${data}`);
+        return res.data; // Return the response data
+      } catch (error) {
+        console.error(error);
+        return (error.response.data); // Return the error message
+      }
+})
+export const revenues=createAsyncThunk('auth/revenue',async()=>{ 
+    try {
+        const res = await axiosInstance.get('user/total-revenue');
+        return res.data;
+    } catch (error) {
+        console.error(error);
+        return error.response.data;
+    }
+});
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     try {
         const res = axiosInstance.post("user/register", data);
@@ -47,19 +76,11 @@ export const loginAccount=createAsyncThunk('auth/login',async(data)=>{
 })
 export const getUserData=createAsyncThunk('auth/getUserData',async(data)=>{
     try {
-        const res=axiosInstance.post('user/me',data);
-        toast.promise(
-            res,{
-                loading:"Wait! for getting your data",
-                success:(data)=>{
-                    return data?.data?.message;
-                },
-                error:"Failed to get your data"
-            }
-        );
-        return (await res).data;
+        const res = await axiosInstance.post('user/me', data);
+        return res.data;
     } catch (error) {
-        toast.error(error?.response?.data?.message);
+        console.error(error);
+        return error.response.data;
     }
 })
 export const logout=createAsyncThunk('auth/logout',async(data)=>{
@@ -162,6 +183,21 @@ export const authSlice = createSlice({
         localStorage.setItem("data",JSON.stringify(action?.payload.data));
         // localStorage.setItem("avatar",action?.payload?.data?.avatar);
     })
+ 
+    builder.addCase(admindatas.fulfilled,(state,action)=>{
+        state.admindata=action.payload.data;
+        console.log("action hi",action.payload);
+        localStorage.setItem("admindata",JSON.stringify(action?.payload.data));
+    })
+    builder.addCase(revenues.fulfilled,(state,action)=>{
+        state.revenue=action.payload.data;
+    })
+    builder.addCase(filterPincode.fulfilled,(state,action)=>{
+        state.filteruser=action.payload.data;
+        localStorage.setItem("filterdata",JSON.stringify(action?.payload.data));
+
+    })
+
     
   
   }

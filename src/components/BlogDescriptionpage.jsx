@@ -27,31 +27,32 @@ function BlogDescriptionPage() {
 
   return (
     <div
-      className="w-full h-screen flex flex-col justify-center items-center"
+      className="w-full min-h-screen flex flex-col justify-center items-center"
       style={{
         backgroundImage: `url(${updateImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <Typography variant="h2" color="white" className="mb-8">
+      <Typography variant="h2" color="white" className="mb-8 text-center">
         Latest Update
       </Typography>
-      <Card className="w-4/5 md:w-2/3 h-96 flex flex-col md:flex-row shadow-lg bg-white">
-        <CardHeader className="w-full md:w-1/2 h-48 md:h-full">
-          <img src={thumbnail} alt="thumbnail" className="w-full h-full object-cover" />
+      <Card className="w-full md:w-11/12 lg:w-9/12 xl:w-8/12 shadow-lg bg-white mx-auto">
+        <CardHeader className="w-full h-48 md:h-60 lg:h-72">
+          <img
+            src={thumbnail}
+            alt="thumbnail"
+            className="w-full h-full object-cover"
+            style={{ maxHeight: '300px' }} // Adjust the max height here
+          />
         </CardHeader>
-        <CardBody className="w-full md:w-1/2 h-full flex flex-col justify-between p-4">
+        <CardBody className="w-full h-full flex flex-col justify-between p-4">
           <div>
-            <Typography variant="h5" color="blue-gray" className="font-medium mb-4">
+            <Typography variant="h5" color="blue-gray" className="font-medium mb-4 text-center">
               {title}
             </Typography>
-            <div className="mb-4 text-sm h-56 overflow-y-auto">
-              <Typography color="gray">
-                {description}
-              </Typography>
-            </div>
-            <Typography color="gray" className="mb-4">
+            <div className="mb-4 text-sm h-96 overflow-y-auto" dangerouslySetInnerHTML={{ __html: description }} />
+            <Typography color="gray" className="mb-4 text-center">
               Published on: {formattedDate}
             </Typography>
           </div>

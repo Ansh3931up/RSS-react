@@ -1,6 +1,11 @@
-import { useState } from "react";
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+// import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+
+import  { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import ReactQuill from 'react-quill';
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -77,6 +82,13 @@ function CreateBlog() {
     });
   };
 
+  const handleEditorChange = (value) => {
+    setUserInput({
+      ...userInput,
+      description: value,
+    });
+  };
+
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -106,12 +118,11 @@ function CreateBlog() {
         thumbnail: null,
         previewImage: "",
       });
-      
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-[100vh]" style={{ backgroundImage: `url(${updateImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="flex items-center justify-center h-full" style={{ backgroundImage: `url(${updateImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <form
         onSubmit={onFormSubmit}
         className="flex flex-col justify-center gap-5 rounded-lg p-4 text-orange-500 bg-orange-100 w-[700px] my-10"
@@ -124,7 +135,7 @@ function CreateBlog() {
         <main className="grid grid-cols-2 gap-x-10">
           <label
             htmlFor="imageUpload"
-            className="cursor-pointer  mx-auto w-full h-full rounded-sm overflow-hidden border-2 border-orange-500"
+            className="cursor-pointer mx-auto w-full h-full rounded-sm overflow-hidden border-2 border-orange-500"
           >
             {userInput.previewImage ? (
               <img
@@ -156,10 +167,9 @@ function CreateBlog() {
           className="border rounded p-2 bg-white text-orange-500"
         />
 
-        <textarea
-          name="description"
+        <ReactQuill
           value={userInput.description}
-          onChange={handleUserInput}
+          onChange={handleEditorChange}
           placeholder="Description"
           className="border rounded p-2 bg-white text-orange-500"
         />

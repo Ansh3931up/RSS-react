@@ -1,7 +1,9 @@
-import { useSelector } from 'react-redux'; 
+import { useDispatch, useSelector } from 'react-redux'; 
 import { Link, useNavigate } from 'react-router-dom';
 
+import { removeBlog } from '../Redux/Blog';
 function BlogCard({ data }) {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
     const role = useSelector((state) => state.auth.role); 
@@ -13,6 +15,10 @@ function BlogCard({ data }) {
         } else {
             return text;
         }
+    };
+    const handleRemove = (id) => {  
+        console.log("remove", id); 
+        dispatch(removeBlog({ id: id })); 
     };
     // console.log(data.page);
     // Determine the background color based on data.page
@@ -28,9 +34,7 @@ function BlogCard({ data }) {
                 <Link to={`/blog/description/${data._id}`} className="block mb-2 text-xl font-bold text-orange-500">
                     {data?.title}
                 </Link>
-                <div className="mb-3 text-sm h-24 overflow-y-auto">
-                    <p>{truncateDescription(data?.description, 150)}</p> {/* Adjust character limit if needed */}
-                </div>
+              
                 <div className="flex flex-row justify-between">
                     <button 
                         type="button" 
@@ -42,6 +46,7 @@ function BlogCard({ data }) {
                     {isLoggedIn && role === "ADMIN" && (
                         <button 
                             type="button" 
+                            onClick={() => handleRemove(data._id)}
                             className="text-white bg-orange-500 hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 me-2 mb-2"
                         >
                             Remove
