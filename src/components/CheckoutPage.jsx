@@ -36,7 +36,7 @@ function Checkout() {
             key: razorpayKey,
             amount: newData.amount,
             currency: "INR",
-            name: "Coursify Pvt. Ltd.",
+            name: "RSS",
             description: "Order Payment",
             order_id: order_id,
             handler: async function (response) {
