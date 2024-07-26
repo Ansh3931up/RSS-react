@@ -17,9 +17,9 @@ const generateColors = (numColors) => {
 
 export default function AdminDashboard() {
   const dispatch = useDispatch();
-  const filterdata=useSelector((state)=>state.auth.filteruser);
-  const revenue = useSelector((state) => state.auth.revenue);
-  const admindata = useSelector((state) => state.auth.admindata);
+  const filterdata=useSelector((state)=>state?.auth?.filteruser);
+  const revenue = useSelector((state) => state?.auth?.revenue);
+  const admindata = useSelector((state) => state?.auth?.admindata);
   const [search,setsearch]=useState(false);
   // const searchTerm = useSelector((state) => state.filter.searchTerm);
   const [searchTerm,setSearchTerm]=useState();
@@ -37,13 +37,13 @@ export default function AdminDashboard() {
   },[searchTerm]);
 
   useEffect(() => {
-    if (admindata && admindata.length > 0) {
-      const pincodes = new Set(admindata.map(user => user.Pincode));
-      setUniquePincodes(pincodes.size);
+    if (admindata && admindata?.length > 0) {
+      const pincodes = new Set(admindata?.map(user => user.Pincode));
+      setUniquePincodes(pincodes?.size);
     }
-    if (admindata && admindata.length > 0) {
-      const state = new Set(admindata.map(user => user.State));
-      setUniqueState(state.size);
+    if (admindata && admindata?.length > 0) {
+      const state = new Set(admindata?.map(user => user.State));
+      setUniqueState(state?.size);
     }
   }, [admindata]);
 
@@ -54,7 +54,7 @@ export default function AdminDashboard() {
   // Assuming search is a boolean indicating if a search term is being used
 // and filterdata is an array of filtered user data
 // console.log(filterdata.length)
-const tabledata = (search && searchTerm) ? filterdata.slice(-10) : admindata?.slice(-6);
+const tabledata = (search && searchTerm) ? filterdata?.slice(-10) : admindata?.slice(-6);
 
   const debouncedCallBack=useDebounce((e)=>setSearchTerm(e.target.value));
 
@@ -124,7 +124,7 @@ const tabledata = (search && searchTerm) ? filterdata.slice(-10) : admindata?.sl
                   <td className="py-3 text-sm">
                     <div className="flex items-center gap-2">
                       <div className="h-10 w-10 rounded-full">
-                        <img src={user.avatar} className="h-full w-full rounded-full" alt={user.username} />
+                        <img src={user?.avatar} className="h-full w-full rounded-full" alt={user?.username} />
                       </div>
                     </div>
                   </td>
@@ -152,22 +152,22 @@ const StatePieChart = ({ data }) => {
   // console.log("Data:", data);
 
   // Extract state names from the data
-  const states = data.map(item => item.State || 'Unknown');
+  const states = data?.map(item => item.State || 'Unknown');
 
   // Get unique state names
   const uniqueStates = [...new Set(states)];
 
   // Count the occurrences of each state
-  const stateCounts = uniqueStates.map(state => ({
+  const stateCounts = uniqueStates?.map(state => ({
     state,
-    count: states.filter(s => s === state).length,
+    count: states?.filter(s => s === state).length,
   })).reduce((acc, { state, count }) => {
     acc[state] = count;
     return acc;
   }, {});
 
   // Generate colors for each state
-  const colors = generateColors(uniqueStates.length);
+  const colors = generateColors(uniqueStates?.length);
 
   const chartData = {
     labels: Object.keys(stateCounts),
@@ -176,7 +176,7 @@ const StatePieChart = ({ data }) => {
         label: 'Users by State',
         data: Object.values(stateCounts),
         backgroundColor: colors,
-        borderColor: colors.map(color => chroma(color).darken(1).hex()), // Darken colors for borders
+        borderColor: colors?.map(color => chroma(color).darken(1).hex()), // Darken colors for borders
         borderWidth: 1,
         hoverOffset: 4,
       },
