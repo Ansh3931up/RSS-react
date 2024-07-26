@@ -174,6 +174,11 @@ function NavBar() {
                         {item.name}
                       </Link>
                     ))}
+                    {isLoggedIn && role === 'ADMIN' && (
+            <Link to="/admin/dashboard" className="text-sm font-semibold text-white hover:text-gray-900">
+              Admin Dashboard
+            </Link>
+          )}
                   </nav>
                 </div>
 
