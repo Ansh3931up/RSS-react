@@ -4,30 +4,14 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { CiFlag1 } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { logout } from '../Redux/Reducer';
 
 const menuItems = [
-  {
-    name: 'Home',
-    to: '/',
-  },
-  {
-    name: 'About',
-    to: '/about',
-  },
-  {
-    name: 'Contact',
-    to: '/contact',
-  },
-  {
-    name: 'Newsletter',
-    to: '/newsletter',
-  },
-  {
-    name: 'Updates',
-    to: '/updates',
-  },
+  { name: 'Home', to: '/' },
+  { name: 'About', to: '/about' },
+  { name: 'Contact', to: '/contact' },
+  { name: 'Newsletter', to: '/newsletter' },
+  { name: 'Updates', to: '/updates' },
 ];
 
 function NavBar() {
@@ -49,6 +33,11 @@ function NavBar() {
     if (response?.payload?.statusCode === 200) {
       navigate('/');
     }
+  };
+
+  // Function to close the menu
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -104,7 +93,7 @@ function NavBar() {
               </Link>
             </div>
           ) : (
-            <div className=" flex items-center">
+            <div className="flex items-center">
               <button
                 type="button"
                 onClick={handleLogout}
@@ -169,15 +158,20 @@ function NavBar() {
                       <Link
                         key={item.name}
                         to={item.to}
+                        onClick={handleMenuItemClick} // Close menu on link click
                         className="m-3 flex items-center rounded-md p-3 text-sm font-semibold text-orange-500 hover:bg-gray-50"
                       >
                         {item.name}
                       </Link>
                     ))}
                     {isLoggedIn && role === 'ADMIN' && (
-                    <Link to="/admin/dashboard" className="m-3 flex items-center rounded-md p-3 text-sm font-semibold text-orange-500 hover:bg-gray-50">
-                    Admin Dashboard
-                    </Link>
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={handleMenuItemClick} // Close menu on link click
+                        className="m-3 flex items-center rounded-md p-3 text-sm font-semibold text-orange-500 hover:bg-gray-50"
+                      >
+                        Admin Dashboard
+                      </Link>
                     )}
                   </nav>
                 </div>
