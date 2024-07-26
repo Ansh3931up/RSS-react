@@ -97,7 +97,7 @@ const Profile = () => {
                   {data?data?.email:"loading..."}
                 </div>
                 <div className="mb-2 text-blueGray-600 mt-10">
-                  <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Created At - {data?data.updatedAt:"loading..."}
+                  <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Subscribed Magazine- {data?isSubscribed?.map((item)=>item.title)}
                 </div>
                 
               </div>
