@@ -169,13 +169,13 @@ function NavBar() {
                       <Link
                         key={item.name}
                         to={item.to}
-                        className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold text-orange-500 hover:bg-gray-50"
+                        className="m-3 flex items-center rounded-md p-3 text-sm font-semibold text-orange-500 hover:bg-gray-50"
                       >
                         {item.name}
                       </Link>
                     ))}
                     {isLoggedIn && role === 'ADMIN' && (
-                    <Link to="/admin/dashboard" className="text-sm font-semibold text-orange-500 hover:text-gray-900">
+                    <Link to="/admin/dashboard" className="m-3 flex items-center rounded-md p-3 text-sm font-semibold text-orange-500 hover:bg-gray-50">
                     Admin Dashboard
                     </Link>
                     )}
