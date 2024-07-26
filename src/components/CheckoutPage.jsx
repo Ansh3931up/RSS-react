@@ -23,7 +23,7 @@ function Checkout() {
         razorpay_payment_id: "",
         razorpay_order_id: "",
         razorpay_signature: "",
-        paycardid: {data._id}
+        paycardid: {state._id}
     };
 
     async function handlePayment(e) {
