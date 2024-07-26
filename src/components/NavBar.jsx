@@ -40,6 +40,11 @@ function NavBar() {
     setIsMenuOpen(false);
   };
 
+  // Function to handle avatar click
+  const handleAvatarClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="w-full bg-orange-500">
       <div className="mx-auto flex max-w-7xl gap-12 items-center justify-between px-4 py-2 sm:px-6 lg:px-4">
@@ -102,13 +107,13 @@ function NavBar() {
                 Logout
               </button>
               <div className="avatar flex justify-start items-start">
-                <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden">
+                <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden cursor-pointer" onClick={handleAvatarClick}>
                   {previewImage ? (
-                    <Link to='user/profile'  onClick={handleMenuItemClick} >
+                    <Link to='user/profile'>
                       <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
                     </Link>
                   ) : (
-                    <BsPersonCircle className="w-full h-full object-cover text-6xl"  onClick={handleMenuItemClick}  />
+                    <BsPersonCircle className="w-full h-full object-cover text-6xl" />
                   )}
                 </div>
               </div>
@@ -133,7 +138,7 @@ function NavBar() {
                     </span>
                     <span className="font-bold text-orange-500">Rashtriya Swayamsevak Sangh</span>
                   </Link>
-                  <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden">
+                  <div className="w-10 h-10 ml-6 mb-1 rounded-full overflow-hidden cursor-pointer" onClick={handleAvatarClick}>
                     {previewImage ? (
                       <Link to='user/profile'>
                         <img src={previewImage} className="w-full h-full object-cover" alt="Avatar" />
