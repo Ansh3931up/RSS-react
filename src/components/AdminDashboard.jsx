@@ -102,7 +102,7 @@ const tabledata = (search && searchTerm) ? filterdata?.slice(-10) : admindata?.s
               </tr>
             </thead>
             <tbody>
-              {tabledata.map((user) => (
+              {tabledata?.map((user) => (
                 <tr key={user.id}>
                   <td className="py-3 text-sm">
                     <p className="text-sm font-medium text-gray-700">{user.fullname}</p>
