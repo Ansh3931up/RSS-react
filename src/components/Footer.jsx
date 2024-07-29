@@ -97,11 +97,15 @@ import logo from '../assets/rss-logo.jpg'
       </div>
     </div>
   </section>
-  <section className="footer bg-neutral text-neutral-content items-center text-center p-4">
+  <section className="footer bg-neutral text-neutral-content items-center flex text-center p-4">
   <aside className="grid-flow-col items-center">
     
     <p>Copyright © ${new Date().getFullYear()} - All right reserved to Rashtriya Swayamsevak Sangh</p>
   </aside>
+   <aside className="grid-flow-col items-center">
+      Website Create by-https://www.linkedin.com/in/ansh-kumarr-a08461253
+    </aside>
+   
   
 </section>
   </>
