@@ -103,7 +103,7 @@ import logo from '../assets/rss-logo.jpg'
     <p>Copyright © ${new Date().getFullYear()} - All right reserved to Rashtriya Swayamsevak Sangh</p>
   </aside>
    <aside className="grid-flow-col items-center">
-      Website Create by-https://www.linkedin.com/in/ansh-kumarr-a08461253
+                                         Website Create by-https://www.linkedin.com/in/ansh-kumar-a08461253
     </aside>
    
   
