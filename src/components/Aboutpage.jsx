@@ -1,58 +1,20 @@
 import aboutimg from "../assets/aboutimg.jpg";
 import { Carouseldata } from "../assets/Carouseldata";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 function AboutPage() {
   // State to track the current slide index
   const [currentSlide, setCurrentSlide] = useState(0);
-  const carouselRef = useRef(null);
 
-  // Function to handle swipe gestures
-  const handleSwipe = (direction) => {
-    if (direction === "left") {
-      setCurrentSlide((prev) =>
-        prev === Carouseldata.length - 1 ? 0 : prev + 1
-      );
-    } else if (direction === "right") {
-      setCurrentSlide((prev) =>
-        prev === 0 ? Carouseldata.length - 1 : prev - 1
-      );
-    }
+  // Function to go to the next slide
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev === Carouseldata.length - 1 ? 0 : prev + 1));
   };
 
-  // Add swipe event listeners
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    let startX = 0;
-    let endX = 0;
-
-    const onTouchStart = (e) => {
-      startX = e.touches[0].clientX;
-    };
-
-    const onTouchMove = (e) => {
-      endX = e.touches[0].clientX;
-    };
-
-    const onTouchEnd = () => {
-      if (startX - endX > 50) handleSwipe("left");
-      if (endX - startX > 50) handleSwipe("right");
-    };
-
-    if (carousel) {
-      carousel.addEventListener("touchstart", onTouchStart);
-      carousel.addEventListener("touchmove", onTouchMove);
-      carousel.addEventListener("touchend", onTouchEnd);
-    }
-
-    return () => {
-      if (carousel) {
-        carousel.removeEventListener("touchstart", onTouchStart);
-        carousel.removeEventListener("touchmove", onTouchMove);
-        carousel.removeEventListener("touchend", onTouchEnd);
-      }
-    };
-  }, []);
+  // Function to go to the previous slide
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? Carouseldata.length - 1 : prev - 1));
+  };
 
   return (
     <div className="flex flex-col gap-10 bg-orange-100 text-black px-4 py-10 md:px-8 md:py-16 lg:px-20 lg:py-20">
@@ -62,7 +24,16 @@ function AboutPage() {
             About Rashtriya Swayamsevak Sangh (RSS)
           </h1>
           <p className="text-base md:text-lg">
-            Welcome to the official page of Rashtriya Swayamsevak Sangh (RSS). Established with a profound vision to foster a united and resilient society, RSS has been a stalwart in promoting cultural nationalism, social harmony, and selfless service for decades. Rooted in the principles of Hindutva and dedicated to the welfare of the nation, RSS is committed to nurturing individuals to become disciplined, responsible citizens who contribute positively to the fabric of our diverse nation. Explore our journey, initiatives, and the values that drive us as we continue to strive for a prosperous and inclusive India.
+            Welcome to the official page of Rashtriya Swayamsevak Sangh (RSS).
+            Established with a profound vision to foster a united and resilient
+            society, RSS has been a stalwart in promoting cultural nationalism,
+            social harmony, and selfless service for decades. Rooted in the
+            principles of Hindutva and dedicated to the welfare of the nation,
+            RSS is committed to nurturing individuals to become disciplined,
+            responsible citizens who contribute positively to the fabric of our
+            diverse nation. Explore our journey, initiatives, and the values
+            that drive us as we continue to strive for a prosperous and
+            inclusive India.
           </p>
         </section>
         <div className="lg:w-1/2 flex justify-center">
@@ -74,14 +45,20 @@ function AboutPage() {
           />
         </div>
       </div>
-      <div className="w-full overflow-hidden relative" ref={carouselRef}>
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+      <div className="relative w-full flex items-center justify-center">
+        {/* Previous Button */}
+        <button
+          onClick={handlePrev}
+          className="absolute left-0 bg-orange-500 p-2 rounded-full shadow-md text-white hover:bg-orange-600 transition-colors focus:outline-none"
         >
+          &larr;
+        </button>
+        <div className="flex transition-transform duration-500 ease-in-out overflow-hidden w-full max-w-xl">
           {Carouseldata.map((data, index) => (
             <div
-              className="min-w-full flex-shrink-0 p-4"
+              className={`min-w-full flex-shrink-0 transition-opacity duration-500 ${
+                index === currentSlide ? "opacity-100" : "opacity-0"
+              }`}
               key={data.slide}
             >
               <img
@@ -96,22 +73,13 @@ function AboutPage() {
             </div>
           ))}
         </div>
-        <div className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center">
-          <button
-            onClick={() => handleSwipe("right")}
-            className="p-2 bg-orange-500 rounded-full shadow-md focus:outline-none"
-          >
-            &larr;
-          </button>
-        </div>
-        <div className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center">
-          <button
-            onClick={() => handleSwipe("left")}
-            className="p-2 bg-orange-500 rounded-full shadow-md focus:outline-none"
-          >
-            &rarr;
-          </button>
-        </div>
+        {/* Next Button */}
+        <button
+          onClick={handleNext}
+          className="absolute right-0 bg-orange-500 p-2 rounded-full shadow-md text-white hover:bg-orange-600 transition-colors focus:outline-none"
+        >
+          &rarr;
+        </button>
       </div>
     </div>
   );
